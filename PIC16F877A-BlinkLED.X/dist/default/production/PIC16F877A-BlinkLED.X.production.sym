@@ -1,0 +1,25 @@
+__Hconfig 2008 0 CONFIG 4
+__Lconfig 0 0 CONFIG 4
+__HINT_VECT A 0 CODE 0
+__LINT_VECT 4 0 CODE 0
+__HRESET_VECT 1 0 CODE 0
+__LRESET_VECT 0 0 CODE 0
+__H__absolute__ 0 0 ABS 0
+__L__absolute__ 0 0 ABS 0
+__Hspace_0 A 0 ABS 0
+__Lspace_0 0 0 ABS 0
+__Hspace_4 400F 0 ABS 0
+__Lspace_4 0 0 ABS 0
+%segments
+RESET_VECT 0 1 CODE 0 0
+INT_VECT 8 13 CODE 8 0
+%locals
+build/default/production/Main.o
+Main.s
+16 0 0 CODE 0
+20 4 0 CODE 0
+23 5 0 CODE 0
+24 6 0 CODE 0
+25 7 0 CODE 0
+26 8 0 CODE 0
+30 9 0 CODE 0
