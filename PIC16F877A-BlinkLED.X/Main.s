@@ -15,7 +15,7 @@
     RESET_VECT:
 	GOTO setup
     
-    psect INT_VECT, class=CODE, delta=2	; indicate the memory location to go when a interrupt happens
+    psect INT_VECT, class=CODE, delta=2		; indicate the memory location to go when a interrupt happens
     INT_VECT:
 	RETFIE
     
