@@ -61,13 +61,13 @@ STRING A-1FFF 2
 # All other numeric values are in decimal.
 %LINETAB
 $build/default/production/Main.o
-4 INT_VECT CODE >20:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
-5 INT_VECT CODE >23:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
-6 INT_VECT CODE >24:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
-7 INT_VECT CODE >25:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
-8 INT_VECT CODE >26:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
-9 INT_VECT CODE >30:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
-0 RESET_VECT CODE >16:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
+4 INT_VECT CODE >24:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
+5 INT_VECT CODE >31:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
+6 INT_VECT CODE >32:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
+7 INT_VECT CODE >33:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
+8 INT_VECT CODE >34:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
+9 INT_VECT CODE >38:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
+0 RESET_VECT CODE >17:D:\Documents\GitHub\PIC16F877A-BlinkLED\PIC16F877A-BlinkLED.X\Main.s
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.

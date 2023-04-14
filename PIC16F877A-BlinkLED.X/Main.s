@@ -10,15 +10,23 @@
     CONFIG  CPD = OFF             ; Data EEPROM Memory Code Protection bit (Data EEPROM code protection off)
     CONFIG  WRT = OFF             ; Flash Program Memory Write Enable bits (Write protection off; all program memory may be written to by EECON control)
     CONFIG  CP = OFF              ; Flash Program Memory Code Protection bit (Code protection off)
-
+    
     psect RESET_VECT, class=CODE, delta=2	; same as ORG, indicate the start position of the program
     RESET_VECT:
+	
 	GOTO setup
-    
+	
     psect INT_VECT, class=CODE, delta=2		; indicate the memory location to go when a interrupt happens
     INT_VECT:
+	
+	; implement method interruption
+	
 	RETFIE
-    
+	
+    ; program variables
+    W_REG   EQU	0
+    F_REG   EQU	1
+	
     setup:
 	BSF STATUS, 5	; set bit 5 of STATUS vector, to select the memory bank 1 (01)
 	BCF TRISB, 0	; clear bit 0 of TRISB vector, to put the pin in output mode
@@ -26,7 +34,7 @@
 	BSF PORTB, 0	; set bit 0 of PORTB vector, to put the output in HIGH
 	
     main:
-    
+	
 	GOTO main
-    
+	
     END RESET_VECT
