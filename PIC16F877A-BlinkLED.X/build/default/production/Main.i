@@ -1669,26 +1669,13 @@ setup:
 
 main:
  MOVLW 0xFF
- MOVWF PORTB ; set lower nibble bits of TRISB vector, to put the selected pins in HIGH
+ MOVWF PORTB ; set lower nibble bits of PORTB vector, to put the selected pins in HIGH
  CALL delay
  MOVLW 0x00
- MOVWF PORTB ; clear all bits of TRISB vector, to put the selected pins in LOW
+ MOVWF PORTB ; clear all bits of PORTB vector, to put the selected pins in LOW
  CALL delay
 
  GOTO main
-
-sevSegDeco:
- ADDWF PCL, 1
- RETLW 0x00
- RETLW 0x01
- RETLW 0x02
- RETLW 0x03
- RETLW 0x04
- RETLW 0x05
- RETLW 0x06
- RETLW 0x07
- RETLW 0x08
- RETLW 0x09
 
 delay:
  MOVLW 0xFF
