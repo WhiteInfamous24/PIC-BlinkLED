@@ -6,7 +6,7 @@ Linker command line:
   --edf=C:/Users/juanm/.mchp_packs/Microchip/PIC16Fxxx_DFP/1.4.149/xc8\pic\dat\20230322214319_en.msgs \
   -cs -h+dist/default/production\PIC16F877A-BlinkLED.X.production.sym \
   --cmf=dist/default/production\PIC16F877A-BlinkLED.X.production.cmf -z \
-  -Q16F877A -oC:\Users\juanm\AppData\Local\Temp\xcAs85c.\driver_tmp_3.o \
+  -Q16F877A -oC:\Users\juanm\AppData\Local\Temp\xcAspeo.\driver_tmp_3.o \
   -pRESET_VECT=0h -pINT_VECT=4h --fixupoverflow=error \
   -ver=XC8 PIC(R) Assembler --fixupoverflow=lstwarn \
   -Mdist/default/production/PIC16F877A-BlinkLED.X.production.map -E1 \
@@ -29,12 +29,12 @@ Machine type is 16F877A
                 Name                               Link     Load   Length Selector   Space Scale
 build/default/production/Main.o
                 config                             2007     2007        1        0       4
-                INT_VECT                              4        4       17        8       0
+                INT_VECT                              4        4       24        8       0
                 RESET_VECT                            0        0        1        0       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   CODE           
-                INT_VECT                              4        4       17         0
+                INT_VECT                              4        4       24         0
                 RESET_VECT                            0        0        1         0
 
         CLASS   STRCODE        
@@ -79,26 +79,26 @@ TOTAL           Name                               Link     Load   Length     Sp
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
 
                 RESET_VECT                     000000  000001  000001         0       0  CODE        2
-                INT_VECT                       000004  000017  00001B         8       0  CODE        2
+                INT_VECT                       000004  000024  000028         8       0  CODE        2
 
 
 UNUSED ADDRESS RANGES
 
         Name                Unused          Largest block    Delta
-        BANK0            0036-006F             3A           1
+        BANK0            0050-006F             20           1
         BANK1            00A0-00EF             50           1
         BANK2            0110-016F             60           1
         BANK3            0190-01EF             60           1
         CODE             0001-0003              3           2
-                         001B-1FFF            800
+                         0028-1FFF            800
         COMMON           0070-007F             10           1
         CONST            0001-0003              3           2
-                         001B-1FFF            100
+                         0028-1FFF            100
         EEDATA           2100-21FF            100           2
         ENTRY            0001-0003              3           2
-                         001B-1FFF            100
+                         0028-1FFF            100
         IDLOC            2000-2003              4           2
-        RAM              0036-006F             3A           1
+        RAM              0050-006F             20           1
                          00A0-00EF             50
                          0110-016F             60
                          0190-01EF             60
@@ -107,15 +107,15 @@ UNUSED ADDRESS RANGES
         SFR2             0100-010F             10           1
         SFR3             0180-018F             10           1
         STRCODE          0001-0003              3           2
-                         001B-1FFF           1FE5
+                         0028-1FFF           1FD8
         STRING           0001-0003              3           2
-                         001B-1FFF            100
+                         0028-1FFF            100
 
                                   Symbol Table
 
-__HINT_VECT     INT_VECT     001B  __HRESET_VECT   RESET_VECT   0001
+__HINT_VECT     INT_VECT     0028  __HRESET_VECT   RESET_VECT   0001
 __H__absolute__ __absolute__ 0000  __Hconfig       config       2008
-__Hspace_0      (abs)        001B  __Hspace_4      (abs)        400F
+__Hspace_0      (abs)        0028  __Hspace_4      (abs)        400F
 __LINT_VECT     INT_VECT     0004  __LRESET_VECT   RESET_VECT   0000
 __L__absolute__ __absolute__ 0000  __Lconfig       config       0000
 __Lspace_0      (abs)        0000  __Lspace_4      (abs)        0000
