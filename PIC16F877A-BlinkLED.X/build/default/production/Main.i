@@ -1659,6 +1659,10 @@ ENDM
     W_REG EQU 0
     F_REG EQU 1
 
+    CTER_0 EQU 0X20
+    CTER_1 EQU 0X21
+    CTER_2 EQU 0X22
+
     setup:
  BSF STATUS, 5 ; set bit 5 of STATUS vector, to select the memory bank 1 (01)
  BCF TRISB, 0 ; clear bit 0 of TRISB vector, to put the pin in output mode
@@ -1666,7 +1670,33 @@ ENDM
  BSF PORTB, 0 ; set bit 0 of PORTB vector, to put the output in HIGH
 
     main:
+ BSF PORTB, 0
+ CALL delay
+ BCF PORTB, 0
+ CALL delay
 
  GOTO main
+
+    delay:
+ MOVLW 0xFF
+ MOVWF CTER_0
+
+    loop_2:
+ MOVLW 0xFF
+ MOVWF CTER_1
+
+    loop_1:
+ MOVLW 0xFF
+ MOVWF CTER_2
+
+    loop_0:
+ DECFSZ CTER_2
+ GOTO loop_0
+ DECFSZ CTER_1
+ GOTO loop_1
+ DECFSZ CTER_0
+ GOTO loop_2
+
+ RETURN
 
     END RESET_VECT
