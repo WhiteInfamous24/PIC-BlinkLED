@@ -1,2 +1,2 @@
-# PIC16F877A-BlinkLED
+# PIC-BlinkLED
  
