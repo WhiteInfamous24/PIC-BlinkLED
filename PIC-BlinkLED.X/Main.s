@@ -38,7 +38,7 @@ CTER_2  EQU 0X22
 
 setup:
     BSF	    STATUS, 5		; set bit 5 of STATUS vector, to select the memory bank 1 (01)
-    MOVLW   0xFF
+    MOVLW   0x00
     MOVWF   TRISB		; set lower nibble bits of TRISB vector, to put all the pin in output mode
     BCF	    STATUS, 5		; clear bit 5 of STATUS vector, to select the memory bank 0 (00)
 
