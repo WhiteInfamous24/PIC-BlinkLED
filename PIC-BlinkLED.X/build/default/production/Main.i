@@ -2464,50 +2464,78 @@ ENDM
   CONFIG BOR4V = BOR40V ; Brown-out Reset Selection bit (Brown-out Reset set to 4.0V)
   CONFIG WRT = OFF ; Flash Program Memory Self Write Enable bits (Write protection off)
 
-; starting position of the program
+; starting position of the program < -pRESET_VECT=0h >
 psect RESET_VECT, class=CODE, delta=2
 RESET_VECT:
     GOTO setup
 
-; memory location to go when a interrupt happens
+; memory location to go when a interrupt happens < -pINT_VECT=4h >
 psect INT_VECT, class=CODE, delta=2
 INT_VECT:
 
+    ; save context
+    MOVWF W_TMP
+    SWAPF STATUS, W
+    MOVWF STATUS_TMP
+
     ; IMPLEMENT METHOD INTERRUPTION
+
+    ; return previous context
+    SWAPF STATUS_TMP, W
+    MOVWF STATUS
+    SWAPF W_TMP, F
+    SWAPF W_TMP, W
 
     RETFIE
 
 ; program variables
-W_REG EQU 0
-F_REG EQU 1
-CTER_0 EQU 0X20
-CTER_1 EQU 0X21
-CTER_2 EQU 0X22
+W_TMP EQU 0x20
+STATUS_TMP EQU 0x21
+CTER_0 EQU 0X22
+CTER_1 EQU 0X23
+CTER_2 EQU 0X24
 
+; program setup
 setup:
-    BSF STATUS, 5 ; set bit 5 of STATUS vector, to select the memory bank 1 (01)
-    MOVLW 0x00
-    MOVWF TRISB ; set lower nibble bits of TRISB vector, to put all the pin in output mode
-    BCF STATUS, 5 ; clear bit 5 of STATUS vector, to select the memory bank 0 (00)
 
+    ; PORTB configuration
+    BANKSEL TRISB ; select TRISB memory bank
+    MOVLW 0b00000000 ; clear TRISB vector, to put all the pin in output mode
+    MOVWF TRISB
+    BANKSEL ANSELH ; set PORTB in digital mode
+    CLRF ANSELH
+
+    ; select PORTB memory bank
+    BANKSEL PORTB
+
+; main program loop
 main:
-    MOVLW 0xFF
-    MOVWF PORTB ; set lower nibble bits of PORTB vector, to put the selected pins in HIGH
+
+    ; put PORTB in HIGH
+    MOVLW 0b00000000 ; put ((PORTB) and 07Fh), 0 pin in HIGH
+    MOVWF PORTB
+
+    ; delay program
     CALL delay
-    MOVLW 0x00
-    MOVWF PORTB ; clear all bits of PORTB vector, to put the selected pins in LOW
+
+    ; put PORTB in LOW
+    MOVLW 0b00000001 ; put ((PORTB) and 07Fh), 0 pin in LOW
+    MOVWF PORTB
+
+    ; delay program
     CALL delay
 
     GOTO main
 
+; delay subroutine (using instructions)
 delay:
-    MOVLW 0xFF
+    MOVLW 0x05 ; initial value of mayor loop
     MOVWF CTER_0
 loop_2:
-    MOVLW 0xFF
+    MOVLW 0xFF ; initial value of medium loop
     MOVWF CTER_1
 loop_1:
-    MOVLW 0xFF
+    MOVLW 0xFF ; initial value of minor loop
     MOVWF CTER_2
 loop_0:
     DECFSZ CTER_2
@@ -2516,6 +2544,7 @@ loop_0:
     GOTO loop_1
     DECFSZ CTER_0
     GOTO loop_2
+
     RETURN
 
 END RESET_VECT
