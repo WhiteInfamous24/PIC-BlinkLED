@@ -30,7 +30,19 @@ INT_VECT:
     SWAPF   STATUS, W
     MOVWF   STATUS_TMP
     
-    ; IMPLEMENT METHOD INTERRUPTION
+    ; interruption sequence
+    BANKSEL INTCON
+    BTFSC   INTCON, 2		; check TMR0 flag
+    CALL    blinkLED		; turn on/off LED
+    
+    ; reset TMR0 counter
+    BANKSEL TMR0
+    MOVLW   0b00000000
+    MOVWF   TMR0
+    
+    ; reset TMR0 flag
+    BANKSEL INTCON
+    BCF	    INTCON, 2
     
     ; return previous context
     SWAPF   STATUS_TMP, W
@@ -43,59 +55,58 @@ INT_VECT:
 ; program variables
 W_TMP	    EQU 0x20
 STATUS_TMP  EQU	0x21
-CTER_0	    EQU 0X22
-CTER_1	    EQU 0X23
-CTER_2	    EQU 0X24
 
 ; program setup
 setup:
     
-    ; PORTB configuration
-    BANKSEL TRISB		; select TRISB memory bank
+    ; PORTC configuration
+    BANKSEL TRISC
     MOVLW   0b00000000		; clear TRISB vector, to put all the pin in output mode
-    MOVWF   TRISB
-    BANKSEL ANSELH		; set PORTB in digital mode
-    CLRF    ANSELH
+    MOVWF   TRISC
     
-    ; select PORTB memory bank
-    BANKSEL PORTB
+    ; TMR0 configuration
+    BANKSEL TMR0
+    MOVLW   0b00000000		; set the initial value for TMR0 counter
+    MOVWF   TMR0
+    BANKSEL OPTION_REG		; use internal instruction clock for TMR0, assign prescaler to TMR0, set prescaler value
+    MOVLW   0b10000111		; | /RBPU | INTEDG | T0CS | T0SE | PSA | PS2 | PS1 | PS0 |
+    MOVWF   OPTION_REG
+    
+    ; interruptions configuration
+    BANKSEL INTCON		; enable global interruptions and enagle T0IE
+    MOVLW   0b10100000		; | GIE | PEIE | T0IE | INTE | RBIE | T0IF | INTF | RBIF |
+    MOVWF   INTCON
+    
+    ; initialize PORTC
+    BANKSEL PORTC
+    MOVLW   0b00000001
+    MOVWF   PORTC
 
 ; main program loop
 main:
     
-    ; put PORTB in HIGH
-    MOVLW   0b00000000		; put RB0 pin in HIGH
-    MOVWF   PORTB
-    
-    ; delay program
-    CALL    delay
-    
-    ; put PORTB in LOW
-    MOVLW   0b00000001		; put RB0 pin in LOW
-    MOVWF   PORTB
-    
-    ; delay program
-    CALL    delay
+    ; VOID MAIN
     
     GOTO    main
-
-; delay subroutine (using instructions)
-delay:
-    MOVLW   0x05		; initial value of mayor loop
-    MOVWF   CTER_0
-loop_2:
-    MOVLW   0xFF		; initial value of medium loop
-    MOVWF   CTER_1
-loop_1:
-    MOVLW   0xFF		; initial value of minor loop
-    MOVWF   CTER_2
-loop_0:
-    DECFSZ  CTER_2
-    GOTO    loop_0
-    DECFSZ  CTER_1
-    GOTO    loop_1
-    DECFSZ  CTER_0
-    GOTO    loop_2
+    
+; turn on/off LED subroutine
+blinkLED:
+    BANKSEL PORTC
+    BTFSS   PORTC, 0
+    GOTO    turnOnLED
+    GOTO    turnOffLED
+    
+; turn on LED
+turnOnLED:
+    MOVLW   0b00000001
+    MOVWF   PORTC
+    
+    RETURN
+    
+; turn off LED
+turnOffLED:
+    MOVLW   0b00000000
+    MOVWF   PORTC
     
     RETURN
 
