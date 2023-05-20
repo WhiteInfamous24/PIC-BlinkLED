@@ -30,15 +30,15 @@ INT_VECT:
     SWAPF   STATUS, W
     MOVWF   STATUS_TMP
     
-    ; interruption sequence
-    BANKSEL INTCON
-    BTFSC   INTCON, 2		; check TMR0 flag
-    CALL    blinkLED		; turn on/off LED
-    
     ; reset TMR0 counter
     BANKSEL TMR0
     MOVLW   0b00000000
     MOVWF   TMR0
+    
+    ; interruption sequence
+    BANKSEL INTCON
+    BTFSC   INTCON, 2		; check TMR0 flag
+    CALL    blinkLED		; turn on/off LED
     
     ; reset TMR0 flag
     BANKSEL INTCON
