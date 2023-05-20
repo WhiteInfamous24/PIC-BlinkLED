@@ -2548,14 +2548,12 @@ blinkLED:
 turnOnLED:
     MOVLW 0b00000001
     MOVWF PORTC
-
     RETURN
 
 ; turn off LED
 turnOffLED:
     MOVLW 0b00000000
     MOVWF PORTC
-
     RETURN
 
 END RESET_VECT
