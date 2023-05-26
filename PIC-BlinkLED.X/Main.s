@@ -49,7 +49,6 @@ INT_VECT:
     MOVWF   STATUS
     SWAPF   W_TMP, F
     SWAPF   W_TMP, W
-    
     RETFIE
 
 ; program variables
@@ -96,16 +95,16 @@ blinkLED:
     GOTO    turnOnLED
     GOTO    turnOffLED
     
-; turn on LED
-turnOnLED:
-    MOVLW   0b00000001
-    MOVWF   PORTC
-    RETURN
-    
-; turn off LED
-turnOffLED:
-    MOVLW   0b00000000
-    MOVWF   PORTC
-    RETURN
+    ; turn on LED
+    turnOnLED:
+	MOVLW   0b00000001
+	MOVWF   PORTC
+	RETURN
+
+    ; turn off LED
+    turnOffLED:
+	MOVLW   0b00000000
+	MOVWF   PORTC
+	RETURN
 
 END RESET_VECT
